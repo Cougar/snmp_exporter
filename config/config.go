@@ -79,8 +79,14 @@ type Module struct {
 	// A list of OIDs.
 	Walk       []string   `yaml:"walk,omitempty"`
 	Get        []string   `yaml:"get,omitempty"`
+	StaticOids []*StaticOid `yaml:"staticoids,omitempty"`
 	Metrics    []*Metric  `yaml:"metrics"`
 	WalkParams WalkParams `yaml:",inline"`
+}
+
+type StaticOid struct {
+	Name  string `yaml:"name"`
+	Value string `yaml:"value"`
 }
 
 func (c *Module) UnmarshalYAML(unmarshal func(interface{}) error) error {
