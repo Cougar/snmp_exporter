@@ -170,6 +170,10 @@ func ScrapeTarget(ctx context.Context, target string, config *config.Module, log
 	}
 	defer snmp.Conn.Close()
 
+	for _, oid := range config.StaticOids {
+		results.pdus = append(results.pdus, gosnmp.SnmpPDU{Name: "." + oid.Name, Value: oid.Value})
+	}
+
 	getOids := config.Get
 	maxOids := int(config.WalkParams.MaxRepetitions)
 	// Max Repetition can be 0, maxOids cannot. SNMPv1 can only report one OID error per call.
